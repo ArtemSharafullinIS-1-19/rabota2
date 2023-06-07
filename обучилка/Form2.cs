@@ -24,7 +24,7 @@ namespace обучилка
             {
                 connection.Open();
                 // Формируем запрос на выборку данных о сотрудниках
-                string запрос = "SELECT * from Tovar";
+                string запрос = "SELECT * from Tovar INNER JOIN Kategoriya on Tovar.categ=Kategoriya.id";
 
                 // Создаем команду для выполнения запроса
                 MySqlCommand command = new MySqlCommand(запрос, connection);
