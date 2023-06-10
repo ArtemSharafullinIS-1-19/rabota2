@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,10 +23,7 @@ namespace обучилка
         {
             MySqlConnection connection = new MySqlConnection("host = 127.0.0.1; port = 3306; password =; user = root; database = obuch");
 
-            string login = textBox1.Text;
-            string pass = textBox2.Text;
-
-            string запрос = $"Select count(*) from Users where login = '{login}' and pass = '{pass}'";
+            string запрос = $"Select count(*) from Users where login = '{textBox1.Text}' and pass = '{sha256(textBox2.Text)}'";
             connection.Open();
             MySqlCommand command = new MySqlCommand(запрос, connection);
             int count = Convert.ToInt32(command.ExecuteScalar());
@@ -41,6 +39,11 @@ namespace обучилка
                 MessageBox.Show("пока");
             }
             connection.Close();
+
+
+
         }
+        string sha256(string ввод) => string.Concat(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(ввод)).Select(item => item.ToString("x2")));
     }
+
 }
