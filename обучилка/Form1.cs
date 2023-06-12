@@ -18,10 +18,11 @@ namespace обучилка
         {
             InitializeComponent();
         }
+            MySqlConnection connection = new MySqlConnection("host = 127.0.0.1; port = 3306; password =; user = root; database = obuch");
+            string sha256(string ввод) => string.Concat(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(ввод)).Select(item => item.ToString("x2")));
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MySqlConnection connection = new MySqlConnection("host = 127.0.0.1; port = 3306; password =; user = root; database = obuch");
 
             string запрос = $"Select count(*) from Users where login = '{textBox1.Text}' and pass = '{sha256(textBox2.Text)}'";
             connection.Open();
@@ -43,7 +44,19 @@ namespace обучилка
 
 
         }
-        string sha256(string ввод) => string.Concat(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(ввод)).Select(item => item.ToString("x2")));
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string login = textBox1.Text;
+            string pass = sha256(textBox2.Text);
+            string запрос = $"insert into Users (login, pass)" + $"values ('{login}', '{pass}')";
+
+            MySqlCommand command = new MySqlCommand(запрос, connection);
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+            MessageBox.Show("зарегался");
+        }
     }
 
 }

@@ -23,12 +23,9 @@ namespace обучилка
             using (MySqlConnection connection = new MySqlConnection("host = 127.0.0.1; port = 3306; password =; user = root; database = obuch"))
             {
                 connection.Open();
-                // Формируем запрос на выборку данных о сотрудниках
                 string запрос = "SELECT * from Tovar INNER JOIN Kategoriya on Tovar.categ=Kategoriya.id";
 
-                // Создаем команду для выполнения запроса
                 MySqlCommand command = new MySqlCommand(запрос, connection);
-                // Создаем адаптер для получения данных и заполняем таблицу DataGridView
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
