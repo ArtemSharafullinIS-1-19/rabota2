@@ -47,9 +47,7 @@ namespace обучилка
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string login = textBox1.Text;
-            string pass = sha256(textBox2.Text);
-            string запрос = $"insert into Users (login, pass)" + $"values ('{login}', '{pass}')";
+            string запрос = $"insert into Users (login, pass)" + $"values ('{textBox1.Text}', '{sha256(textBox2.Text)}')";
 
             MySqlCommand command = new MySqlCommand(запрос, connection);
             connection.Open();
